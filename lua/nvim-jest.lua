@@ -41,6 +41,7 @@ function M.setup(user_data)
   if user_data ~= nil then
     config.jest_cmd = user_data.jest_cmd or nil
     config.silent = user_data.silent or nil
+    config.coverage = user_data.coverage or nil
   end
 
   if config.jest_cmd == nil then
@@ -49,6 +50,10 @@ function M.setup(user_data)
 
   if config.silent == nil then
     config.silent = true
+  end
+
+  if config.coverage == nil then
+    config.coverage = true
   end
 end
 
@@ -70,6 +75,10 @@ function M.test_file()
     table.insert(args, " --silent")
   end
 
+  if config.coverage ~= nil then
+    table.insert(args, " --coverage=" .. tostring(config.coverage))
+  end
+
   run_jest(args)
 
   focus_last_accessed_window()
@@ -88,6 +97,11 @@ function M.test_single()
     table.insert(args, " --runTestsByPath " .. c_file)
     table.insert(args, " -t='" .. test_name .. "'")
     table.insert(args, " --watch")
+
+    if config.coverage ~= nil then
+      table.insert(args, " --coverage=" .. tostring(config.coverage))
+    end
+
     run_jest(args)
 
     focus_last_accessed_window()
