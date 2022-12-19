@@ -41,7 +41,7 @@ function M.setup(user_data)
   if user_data ~= nil then
     config.jest_cmd = user_data.jest_cmd or nil
     config.silent = user_data.silent or nil
-    config.coverage = user_data.coverage or nil
+    config.hideCoverage = user_data.hideCoverage or nil
   end
 
   if config.jest_cmd == nil then
@@ -52,8 +52,10 @@ function M.setup(user_data)
     config.silent = true
   end
 
-  if config.coverage == nil then
+  if config.hideCoverage == nil then
     config.coverage = true
+  else
+    config.coverage=false
   end
 end
 
